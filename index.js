@@ -4,6 +4,27 @@ const path = require('path');
 const app = express();
 const publicPath = path.join(__dirname,'public');
 
+const ResponseFillter = (req,resp,next)=>
+{
+    if (!req.query.age)
+    {
+        resp.send('Please Enter Age');
+    }
+    else
+    if (req.query.age < 18)
+    {
+        resp.send('Sorry You Are 18 below')
+    }
+    else
+    {
+        next();
+    }
+}
+
+//middleware to modify response data like checking user age or he is logged in or not
+
+app.use(ResponseFillter);
+
 //it will send files with .html extension 
 //app.use(express.static(publicPath)); 
 
